@@ -1,22 +1,39 @@
 local wezterm = require("wezterm")
-
+local platform = require("utils/platform")
 local config = wezterm.config_builder()
 
 -- 设置启动程序
-config.default_prog = {
-    "pwsh"
-}
+if platform.is_mac then
+    config.default_prog = { "zsh" }
+elseif platform.is_win then
+    config.default_prog = { "pwsh" }
+else
+    config.default_prog = { "bash" }
+end
 
--- 启动菜单的一些启动项
-config.launch_menu = {
-    { label = 'PowerShell',    args = { 'pwsh.exe' }, },
-    { label = 'CMD',           args = { 'cmd.exe' }, },
-    { label = 'ALiYun-Debian', args = { 'ssh', "ALiYun" }, },
-}
+-- 设置启动菜单的一些启动项
+config.launch_menu = {}
+
+-- 根据操作系统添加不同的启动项
+if os == platform.is_win then
+    table.insert(config.launch_menu, { label = 'PowerShell', args = { 'pwsh.exe' }, })
+    table.insert(config.launch_menu, { label = 'CMD', args = { 'cmd.exe' }, })
+elseif os == platform.is_mac then
+    table.insert(config.launch_menu, { label = 'Zsh', args = { 'zsh' }, })
+    table.insert(config.launch_menu, { label = 'Bash', args = { 'bash' }, })
+else
+    table.insert(config.launch_menu, { label = 'Bash', args = { 'bash' }, })
+end
+
+-- 通用启动项
+table.insert(config.launch_menu, { label = 'ALiYun-Debian', args = { 'ssh', "ALiYun" }, })
+
+-- 添加字体目录
+config.font_dirs = { wezterm.config_dir .. "/fonts" }
 
 -- 设置字体
 config.font_size = 16
-config.font = wezterm.font("FiraCode Nerd Font", { weight = "Medium" })
+config.font = wezterm.font("FiraCode Nerd Font")
 -- 设置颜色主题
 config.color_scheme = 'Catppuccin Mocha'
 -- 设置tab栏
