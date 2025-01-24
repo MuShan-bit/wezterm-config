@@ -13,7 +13,7 @@ if platform.is_win then
         { label = " Cmd", args = { "cmd" } },
     }
 elseif platform.is_mac then
-    options.default_prog = { "zsh" }
+    options.default_prog = { "/usr/bin/env", "zsh", "--login" }
     options.launch_menu = {
         { label = " Bash", args = { "bash" } },
         { label = " Zsh", args = { "zsh" } },
