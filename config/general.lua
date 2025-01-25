@@ -9,12 +9,13 @@ return {
     -- 设置颜色主题
     color_scheme = 'catppuccin-mocha',
     -- 设置tab栏
+    enable_tab_bar = false,
     use_fancy_tab_bar = false,
     tab_max_width = 25,
     -- 隐藏tab栏下标
     show_tab_index_in_tab_bar = false,
     --  设置窗口样式
-    window_decorations = "RESIZE",
+    window_decorations = "RESIZE", -- "NONE" | "FULL" | "RESIZE" | "THIN" | "THICK",
     window_background_opacity = 0.9,
     text_background_opacity = 0.9,
     -- 防止放大缩小字体时窗口大小变化
