@@ -1,4 +1,4 @@
-# Wezterm 配置（MuShan 私人）
+# Wezterm 配置
 
 支持 Windows / Mac / Linux
 
@@ -19,3 +19,7 @@ brew install --cask wezterm
 ```shell
 git clone git@github.com:MuShan-bit/wezterm-config.git wezterm
 ```
+
+## 效果图
+
+![效果图](./image/01.png)
