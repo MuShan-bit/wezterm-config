@@ -27,8 +27,8 @@ return {
         bottom = 20,
     },
     -- 初始状态窗口大小
-    initial_rows = 20,
-    initial_cols = 80,
+    initial_rows = 150,
+    initial_cols = 200,
     -- 禁用滚动条
     enable_scroll_bar = false,
     background = {
