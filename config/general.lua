@@ -13,11 +13,14 @@ return {
     use_fancy_tab_bar = false,
     tab_max_width = 25,
     -- 隐藏tab栏下标
-    show_tab_index_in_tab_bar = false,
+    hide_tab_bar_if_only_one_tab = true,
+    -- show_tab_index_in_tab_bar = false,
+    show_new_tab_button_in_tab_bar = false,
     --  设置窗口样式
     window_decorations = "RESIZE", -- "NONE" | "FULL" | "RESIZE" | "THIN" | "THICK",
-    window_background_opacity = 0.9,
+    window_background_opacity = 0.5,
     text_background_opacity = 0.9,
+    macos_window_background_blur = 70,
     -- 防止放大缩小字体时窗口大小变化
     adjust_window_size_when_changing_font_size = false,
     -- 设置内边距
@@ -31,27 +34,27 @@ return {
     initial_cols = 200,
     -- 禁用滚动条
     enable_scroll_bar = false,
-    background = {
-        {
-            source = {
-                File = wezterm.config_dir .. "/background/night.png",
-            },
-            hsb = {
-                hue = 1.0,
-                saturation = 1.02,
-                brightness = 0.25,
-            },
-            -- attachment = { Parallax = 0.3 },
-            -- width = "100%",
-            -- height = "100%",
-        },
-        {
-            source = {
-                Color = "#282c35",
-            },
-            width = "100%",
-            height = "100%",
-            opacity = 0.55,
-        },
-    },
+    -- background = {
+    --     {
+    --         source = {
+    --             File = wezterm.config_dir .. "/background/night.png",
+    --         },
+    --         hsb = {
+    --             hue = 1.0,
+    --             saturation = 1.02,
+    --             brightness = 0.25,
+    --         },
+    --         -- attachment = { Parallax = 0.3 },
+    --         -- width = "100%",
+    --         -- height = "100%",
+    --     },
+    --     {
+    --         source = {
+    --             Color = "#282c35",
+    --         },
+    --         width = "100%",
+    --         height = "100%",
+    --         opacity = 0.55,
+    --     },
+    -- },
 }
