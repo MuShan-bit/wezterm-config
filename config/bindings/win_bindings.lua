@@ -1,5 +1,4 @@
 local act = require("wezterm").action
-local platform = require("utils.platform")
 
 local keys = {
     -- Ctrl+Shift+Tab 遍历 tab
@@ -89,22 +88,6 @@ local mouse_bindings = {
         action = act.ScrollByCurrentEventWheelDelta,
     },
 }
-
-if platform.is_win then
-    return {
-        disable_default_key_bindings = true,
-        disable_default_mouse_bindings = true,
-        leader = { key = "Space", mods = "CTRL|SHIFT" },
-        keys = keys,
-        mouse_bindings = mouse_bindings,
-    }
-elseif platform.is_mac then
-    return {
-        disable_default_key_bindings = false,
-        disable_default_mouse_bindings = false,
-        leader = { key = "Space", mods = "CTRL|SHIFT" },
-    }
-end
 
 return {
     disable_default_key_bindings = true,
