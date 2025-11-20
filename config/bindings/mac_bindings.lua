@@ -46,9 +46,8 @@ local keys = {
     { key = "j",          mods = "CMD|SHIFT", action = act.ScrollByLine(1) },
     { key = "PageUp",     mods = "CMD",       action = act.ScrollByPage(-1) },
     { key = "PageDown",   mods = "CMD",       action = act.ScrollByPage(1) },
-    -- 调试与退出
-    { key = "x",          mods = "CMD|SHIFT", action = act.ShowDebugOverlay },
-    { key = "q",          mods = "CMD|SHIFT", action = act.QuitApplication },
+    -- 退出
+    { key = "q",          mods = "CMD",       action = act.QuitApplication },
 }
 
 local mouse_bindings = {
