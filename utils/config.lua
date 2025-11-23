@@ -1,16 +1,16 @@
 local wezterm = require("wezterm")
 
-local function mergeConfig(target, source)
+local function merge_config(target, source)
     for key, value in pairs(source) do
         target[key] = value
     end
 end
 
-local function initConfig()
+local function init_config()
     return wezterm.config_builder()
 end
 
 return {
-    initConfig = initConfig,
-    mergeConfig = mergeConfig,
+    init_config = init_config,
+    merge_config = merge_config,
 }

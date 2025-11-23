@@ -9,12 +9,14 @@ return {
     -- 设置颜色主题
     color_scheme = 'catppuccin-mocha',
     -- 设置tab栏
-    enable_tab_bar = false,
+    enable_tab_bar = true,
+    -- 使用精美的标签栏（反而违和）
     use_fancy_tab_bar = false,
+    -- 标签栏宽度
     tab_max_width = 25,
-    -- 隐藏tab栏下标
+    -- 如果只有一个 tab 时隐藏tab栏
     hide_tab_bar_if_only_one_tab = true,
-    -- show_tab_index_in_tab_bar = false,
+    -- 显示新建标签页按钮
     show_new_tab_button_in_tab_bar = false,
     --  设置窗口样式
     window_decorations = "RESIZE", -- "NONE" | "FULL" | "RESIZE" | "THIN" | "THICK",
