@@ -27,15 +27,28 @@ return {
     adjust_window_size_when_changing_font_size = false,
     -- 设置内边距
     window_padding = {
-        right = 20,
-        top = 20,
-        bottom = 20,
+        left   = '0.6cell',
+        right  = '0.6cell',
+        top    = '0.4cell',
+        bottom = '0.4cell',
     },
     -- 初始状态窗口大小
     initial_rows = 150,
     initial_cols = 200,
     -- 禁用滚动条
     enable_scroll_bar = false,
+    -- 增加窗口边框
+    window_frame = {
+        border_left_width    = '1px',
+        border_right_width   = '1px',
+        border_top_height    = '1px',
+        border_bottom_height = '1px',
+
+        border_left_color    = 'rgba(255,255,255,0.08)',
+        border_right_color   = 'rgba(255,255,255,0.08)',
+        border_top_color     = 'rgba(255,255,255,0.08)',
+        border_bottom_color  = 'rgba(255,255,255,0.08)',
+    },
     -- background = {
     --     {
     --         source = {
