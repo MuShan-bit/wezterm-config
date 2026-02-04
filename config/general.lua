@@ -1,4 +1,5 @@
 local wezterm = require("wezterm")
+local wallpaper = require("config.wallpaper")
 
 return {
     -- 添加字体目录
@@ -49,27 +50,6 @@ return {
         border_top_color     = 'rgba(255,255,255,0.08)',
         border_bottom_color  = 'rgba(255,255,255,0.08)',
     },
-    -- background = {
-    --     {
-    --         source = {
-    --             File = wezterm.config_dir .. "/background/night.png",
-    --         },
-    --         hsb = {
-    --             hue = 1.0,
-    --             saturation = 1.02,
-    --             brightness = 0.25,
-    --         },
-    --         -- attachment = { Parallax = 0.3 },
-    --         -- width = "100%",
-    --         -- height = "100%",
-    --     },
-    --     {
-    --         source = {
-    --             Color = "#282c35",
-    --         },
-    --         width = "100%",
-    --         height = "100%",
-    --         opacity = 0.55,
-    --     },
-    -- },
+    -- 使用壁纸模块获取背景配置
+    background = wallpaper.get_background_config(),
 }
