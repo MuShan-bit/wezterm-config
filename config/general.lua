@@ -5,8 +5,10 @@ return {
     -- 添加字体目录
     font_dirs = { wezterm.config_dir .. "/fonts" },
     -- 设置字体
-    font_size = 16,
-    font = wezterm.font("FiraCode Nerd Font"),
+    font_size = 18,
+    line_height = 1.6,
+    cell_width = 1.0,
+    font = wezterm.font("Maple Mono NF CN"),
     -- 设置颜色主题
     color_scheme = 'catppuccin-mocha',
     -- 设置tab栏
@@ -33,8 +35,8 @@ return {
         top    = '0.4cell',
         bottom = '0.4cell',
     },
-    -- 初始状态窗口大小
-    initial_rows = 150,
+    -- 初始状态窗口大小（行数）
+    initial_rows = 25,
     initial_cols = 200,
     -- 禁用滚动条
     enable_scroll_bar = false,
