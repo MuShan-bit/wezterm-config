@@ -15,6 +15,7 @@ local DEFAULTS = {
     color = "#0d1117",
     overlay_opacity = 0.68,
     brightness = 0.85,
+    transparent_opacity = 0.5,
 }
 
 local supported_extensions = {
@@ -120,6 +121,7 @@ local function with_defaults(options)
         color = options.color or DEFAULTS.color,
         overlay_opacity = options.overlay_opacity or DEFAULTS.overlay_opacity,
         brightness = options.brightness or DEFAULTS.brightness,
+        transparent_opacity = options.transparent_opacity or DEFAULTS.transparent_opacity,
     }
 end
 
@@ -127,7 +129,7 @@ function M.get_background_config(options)
     local config = with_defaults(options)
 
     if config.style == M.styles.transparent then
-        return color_background(config.color, 0)
+        return color_background(config.color)
     end
 
     if config.style == M.styles.solid then
@@ -155,7 +157,7 @@ end
 function M.get_window_background_opacity(options)
     local config = with_defaults(options)
     if config.style == M.styles.transparent then
-        return 0
+        return config.transparent_opacity
     end
 
     return 1

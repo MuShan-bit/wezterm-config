@@ -64,9 +64,9 @@ git clone https://github.com/MuShan-bit/wezterm-config.git ~/.config/wezterm
 | `random` | 从 `background/random` 随机选取壁纸 | `random_dir` |
 | `fixed` | 使用一张固定壁纸 | `fixed_path` |
 | `solid` | 使用纯色背景 | `color` |
-| `transparent` | 使用完全透明的窗口背景 | 无 |
+| `transparent` | 使用半透明的窗口背景 | `transparent_opacity` |
 
-壁纸模式可通过 `overlay_opacity` 调整黑色遮罩，通过 `brightness` 调整壁纸亮度；图片不存在时会自动回退到 `color`。
+壁纸模式可通过 `overlay_opacity` 调整黑色遮罩，通过 `brightness` 调整壁纸亮度；透明模式的默认不透明度为 `0.5`，可通过 `transparent_opacity` 调整。图片不存在时会自动回退到 `color`。
 
 ### SSH 远程连接
 

@@ -3,12 +3,13 @@ local wallpaper = require("config.wallpaper")
 
 -- 可选值：random（随机壁纸）、fixed（固定壁纸）、solid（纯色背景）、transparent（透明背景）
 local background_options = {
-    style = wallpaper.styles.solid,
+    style = wallpaper.styles.transparent,
     random_dir = wezterm.config_dir .. "/background/random",
     fixed_path = wezterm.config_dir .. "/background/night.png",
     color = "#0d1117",
     overlay_opacity = 0.68,
     brightness = 0.85,
+    transparent_opacity = 0.5,
 }
 
 return {

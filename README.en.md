@@ -64,9 +64,9 @@ Set `background_options.style` at the top of `config/general.lua`:
 | `random` | Pick a wallpaper from `background/random` | `random_dir` |
 | `fixed` | Use one wallpaper | `fixed_path` |
 | `solid` | Use a solid colour | `color` |
-| `transparent` | Use a fully transparent window background | None |
+| `transparent` | Use a translucent window background | `transparent_opacity` |
 
-For wallpaper styles, use `overlay_opacity` for the black overlay and `brightness` for the wallpaper. Missing images fall back to `color`.
+For wallpaper styles, use `overlay_opacity` for the black overlay and `brightness` for the wallpaper. Transparent mode defaults to `0.5` opacity and can be adjusted with `transparent_opacity`. Missing images fall back to `color`.
 
 ### SSH Remote Connections
 
