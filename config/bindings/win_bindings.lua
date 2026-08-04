@@ -1,4 +1,5 @@
 local act = require("wezterm").action
+local mouse_bindings = require("config.bindings.mouse")
 
 local keys = {
     -- Ctrl+Shift+Tab 遍历 tab
@@ -29,64 +30,6 @@ local keys = {
     { key = 'UpArrow',   mods = 'SHIFT|CTRL', action = act.ScrollByLine(-1) },
     -- Ctrl+Shift+DownArrow 向下滚动一行
     { key = 'DownArrow', mods = 'SHIFT|CTRL', action = act.ScrollByLine(1) },
-}
-
-local mouse_bindings = {
-    -- 按住 Ctrl 键单击将打开鼠标光标下的链接
-    {
-        event = { Up = { streak = 1, button = "Left" } },
-        mods = "CTRL",
-        action = act.OpenLinkAtMouseCursor,
-    },
-    -- 移动鼠标只会选择文本而不会将文本复制到剪贴板
-    {
-        event = { Down = { streak = 1, button = "Left" } },
-        mods = "NONE",
-        action = act.SelectTextAtMouseCursor("Cell"),
-    },
-    {
-        event = { Up = { streak = 1, button = "Left" } },
-        mods = "NONE",
-        action = act.ExtendSelectionToMouseCursor("Cell"),
-    },
-    {
-        event = { Drag = { streak = 1, button = "Left" } },
-        mods = "NONE",
-        action = act.ExtendSelectionToMouseCursor("Cell"),
-    },
-    -- 左键单击三次将选择一行
-    {
-        event = { Down = { streak = 3, button = "Left" } },
-        mods = "NONE",
-        action = act.SelectTextAtMouseCursor("Line"),
-    },
-    {
-        event = { Up = { streak = 3, button = "Left" } },
-        mods = "NONE",
-        action = act.SelectTextAtMouseCursor("Line"),
-    },
-    -- 双击左键将选择一个单词
-    {
-        event = { Down = { streak = 2, button = "Left" } },
-        mods = "NONE",
-        action = act.SelectTextAtMouseCursor("Word"),
-    },
-    {
-        event = { Up = { streak = 2, button = "Left" } },
-        mods = "NONE",
-        action = act.SelectTextAtMouseCursor("Word"),
-    },
-    -- 打开鼠标滚轮来滚动屏幕
-    {
-        event = { Down = { streak = 1, button = { WheelUp = 1 } } },
-        mods = "NONE",
-        action = act.ScrollByCurrentEventWheelDelta,
-    },
-    {
-        event = { Down = { streak = 1, button = { WheelDown = 1 } } },
-        mods = "NONE",
-        action = act.ScrollByCurrentEventWheelDelta,
-    },
 }
 
 return {
