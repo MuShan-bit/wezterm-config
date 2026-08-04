@@ -57,16 +57,23 @@ git clone https://github.com/MuShan-bit/wezterm-config.git ~/.config/wezterm
 
 ### 背景风格
 
-在 `config/general.lua` 顶部的 `background_options.style` 中选择：
+`wallpaper.get_background_config()` 可接收以下配置。无参数时保持当前的黑色遮罩效果。
 
-| 值 | 效果 | 配置项 |
+| 模式 | 配置 | 效果 |
 | --- | --- | --- |
-| `random` | 从 `background/random` 随机选取壁纸 | `random_dir` |
-| `fixed` | 使用一张固定壁纸 | `fixed_path` |
-| `solid` | 使用纯色背景 | `color` |
-| `transparent` | 使用半透明的窗口背景 | `transparent_opacity` |
+| `wallpaper.modes.transparent` | 无 | 固定黑色遮罩，`opacity = 0.7` |
+| `wallpaper.modes.solid` | `color` | 纯色背景 |
+| `wallpaper.modes.fixed` | `path` | 固定图像背景 |
+| `wallpaper.modes.random` | `path` | 从指定目录随机选择图像背景 |
 
-壁纸模式可通过 `overlay_opacity` 调整黑色遮罩，通过 `brightness` 调整壁纸亮度；透明模式的默认不透明度为 `0.5`，可通过 `transparent_opacity` 调整。图片不存在时会自动回退到 `color`。
+```lua
+background = wallpaper.get_background_config({
+    mode = wallpaper.modes.fixed,
+    path = wezterm.config_dir .. "/background/night.png",
+})
+```
+
+随机模式的 `path` 是图片目录，默认使用 `background/random`；固定图像不存在、随机目录为空或模式无效时，会自动回退到黑色遮罩。
 
 ### SSH 远程连接
 

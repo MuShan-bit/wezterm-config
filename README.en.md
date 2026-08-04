@@ -57,16 +57,23 @@ git clone https://github.com/MuShan-bit/wezterm-config.git ~/.config/wezterm
 
 ### Background Styles
 
-Set `background_options.style` at the top of `config/general.lua`:
+`wallpaper.get_background_config()` accepts the following options. Calling it without options preserves the current black-overlay effect.
 
-| Value | Result | Option |
+| Mode | Option | Result |
 | --- | --- | --- |
-| `random` | Pick a wallpaper from `background/random` | `random_dir` |
-| `fixed` | Use one wallpaper | `fixed_path` |
-| `solid` | Use a solid colour | `color` |
-| `transparent` | Use a translucent window background | `transparent_opacity` |
+| `wallpaper.modes.transparent` | None | Fixed black overlay with `opacity = 0.7` |
+| `wallpaper.modes.solid` | `color` | Solid colour background |
+| `wallpaper.modes.fixed` | `path` | One image background |
+| `wallpaper.modes.random` | `path` | Random image from a directory |
 
-For wallpaper styles, use `overlay_opacity` for the black overlay and `brightness` for the wallpaper. Transparent mode defaults to `0.5` opacity and can be adjusted with `transparent_opacity`. Missing images fall back to `color`.
+```lua
+background = wallpaper.get_background_config({
+    mode = wallpaper.modes.fixed,
+    path = wezterm.config_dir .. "/background/night.png",
+})
+```
+
+For random mode, `path` is an image directory and defaults to `background/random`. Missing fixed images, empty random directories, and unknown modes fall back to the black overlay.
 
 ### SSH Remote Connections
 
