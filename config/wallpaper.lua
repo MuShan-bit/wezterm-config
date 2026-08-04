@@ -39,21 +39,6 @@ local function is_supported_image(path)
     return extension ~= nil and SUPPORTED_EXTENSIONS[extension:lower()] == true
 end
 
-local function scan_with_glob(directory)
-    if not wezterm.glob then
-        return nil
-    end
-
-    local wallpapers = {}
-    for _, path in ipairs(wezterm.glob(directory .. "/*")) do
-        if is_supported_image(path) and file_exists(path) then
-            table.insert(wallpapers, path)
-        end
-    end
-
-    return wallpapers
-end
-
 local function scan_with_find(directory)
     local wallpapers = {}
     local command = string.format(
@@ -82,7 +67,7 @@ function M.get_wallpaper_files(directory)
         return wallpaper_cache[directory]
     end
 
-    local wallpapers = scan_with_glob(directory) or scan_with_find(directory)
+    local wallpapers = scan_with_find(directory)
     table.sort(wallpapers)
     wallpaper_cache[directory] = wallpapers
     return wallpapers

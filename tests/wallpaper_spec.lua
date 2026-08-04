@@ -10,12 +10,6 @@ fixture_file:close()
 package.preload["wezterm"] = function()
     return {
         config_dir = "/tmp/wezterm-config",
-        glob = function(directory)
-            if directory == "/tmp/wallpapers/*" then
-                return { fixture_path }
-            end
-            return {}
-        end,
         log_warn = function() end,
     }
 end
@@ -38,6 +32,11 @@ local fixed = wallpaper.get_background_config({
     path = fixture_path,
 })
 assert(fixed[1].source.File == fixture_path)
+
+wallpaper.get_random_wallpaper = function(directory)
+    assert(directory == "/tmp/wallpapers")
+    return fixture_path
+end
 
 local random = wallpaper.get_background_config({
     mode = wallpaper.modes.random,
