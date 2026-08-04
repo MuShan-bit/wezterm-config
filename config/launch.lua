@@ -25,7 +25,4 @@ elseif platform.is_linux then
     }
 end
 
--- 远程连接配置填充
-table.insert(options.launch_menu, { label = "ALiYun-Debian", args = { "ssh", "ALiYun" } })
-
 return options

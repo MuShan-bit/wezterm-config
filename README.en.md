@@ -52,7 +52,7 @@ git clone https://github.com/MuShan-bit/wezterm-config.git ~/.config/wezterm
 - Fonts & Theme: `FiraCode Nerd Font` with `Catppuccin Mocha` for readability and aesthetics.
 - Window & Rendering: translucent background, macOS blur, adjustable decorations and padding, large initial viewport.
 - Tabs & Status: Tabline plugin showing workspace, CPU/RAM, datetime, battery, and domain.
-- Launch Menu & Default Shell: per-OS defaults with common shells; remote SSH entries can be added.
+- Launch Menu & Default Shell: per-OS defaults with common shells and automatically generated SSH entries.
 - Cross-Platform Bindings: platform-specific keymaps; Linux keeps WezTerm defaults.
 
 ### Background Styles
@@ -67,6 +67,12 @@ Set `background_options.style` at the top of `config/general.lua`:
 | `transparent` | Use a fully transparent window background | None |
 
 For wallpaper styles, use `overlay_opacity` for the black overlay and `brightness` for the wallpaper. Missing images fall back to `color`.
+
+### SSH Remote Connections
+
+The SSH plugin is enabled by default. It reads `~/.ssh/config`, including files referenced by `Include`, and adds valid `Host` aliases to the launch menu. Selecting `SSH: <host>` opens a new remote-connection tab. Wildcard rules such as `Host *` are not listed.
+
+Set `enabled_plugins.ssh` to `false` in `plugins/init.lua` to disable it.
 
 ## Shortcuts
 
@@ -125,7 +131,7 @@ For wallpaper styles, use `overlay_opacity` for the black overlay and `brightnes
 | macOS | `/usr/bin/env zsh --login` | Bash / Zsh |
 | Linux | `bash` | Bash |
 
-> Remote SSH: add your own items via the launch menu (e.g., `ssh <host>`). Non-general examples are omitted.
+> Remote SSH: Host aliases from `~/.ssh/config` are shown automatically in the launch menu.
 
 ## Dependencies & Plugins
 

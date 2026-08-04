@@ -52,7 +52,7 @@ git clone https://github.com/MuShan-bit/wezterm-config.git ~/.config/wezterm
 - 字体与主题：使用 `FiraCode Nerd Font` 与 `Catppuccin Mocha` 主题，兼具可读性与美观。
 - 窗口与渲染：半透明背景、macOS 毛玻璃、可调窗口装饰与内边距，超大初始视野。
 - 标签与状态信息：集成 Tabline 插件，显示工作区、CPU/RAM、时间、电池与域信息。
-- 启动菜单与默认 Shell：按操作系统设置默认 Shell，并提供常用 Shell/远程 SSH 启动项。
+- 启动菜单与默认 Shell：按操作系统设置默认 Shell，并自动生成 SSH 远程连接启动项。
 - 跨平台绑定：根据平台自动加载快捷键方案；Linux 保留 Wezterm 默认快捷键。
 
 ### 背景风格
@@ -67,6 +67,12 @@ git clone https://github.com/MuShan-bit/wezterm-config.git ~/.config/wezterm
 | `transparent` | 使用完全透明的窗口背景 | 无 |
 
 壁纸模式可通过 `overlay_opacity` 调整黑色遮罩，通过 `brightness` 调整壁纸亮度；图片不存在时会自动回退到 `color`。
+
+### SSH 远程连接
+
+SSH 插件默认开启，会读取 `~/.ssh/config`（并解析其中的 `Include` 文件），将有效的 `Host` 别名加入启动菜单。选择 `SSH: <主机名>` 即会新建一个对应的远程连接 Tab；通配符规则（如 `Host *`）不会显示为菜单项。
+
+在 `plugins/init.lua` 将 `enabled_plugins.ssh` 设为 `false` 可关闭该功能。
 
 ## 快捷键
 
@@ -125,7 +131,7 @@ git clone https://github.com/MuShan-bit/wezterm-config.git ~/.config/wezterm
 | macOS | `/usr/bin/env zsh --login` | Bash / Zsh |
 | Linux | `bash` | Bash |
 
-> 远程 SSH：支持通过启动菜单添加自定义条目（例如 `ssh <host>`）。
+> 远程 SSH：启动菜单会自动显示 `~/.ssh/config` 中的 Host 别名。
 
 ## 依赖与插件
 

@@ -1,6 +1,6 @@
 local config = require("config").build()
 local plugins = require("plugins")
 
-plugins.load()
+plugins.load(config)
 
 return config
