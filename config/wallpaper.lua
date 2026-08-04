@@ -1,104 +1,109 @@
 local wezterm = require("wezterm")
 
--- 随机壁纸配置模块
 local M = {}
 
--- 验证文件是否存在
-function M.file_exists(path)
-    local f = io.open(path, "r")
-    if f then
-        f:close()
-        return true
-    else
+local WALLPAPER_DIR = wezterm.config_dir .. "/background/random"
+local OVERLAY_OPACITY = 0.7
+local SUPPORTED_EXTENSIONS = {
+    jpg = true,
+    jpeg = true,
+    png = true,
+    webp = true,
+}
+
+local wallpaper_cache
+
+local function file_exists(path)
+    local file = io.open(path, "r")
+    if not file then
         return false
     end
+
+    file:close()
+    return true
 end
 
--- 通过系统命令获取目录中的图片文件
-function M.get_wallpaper_files()
-    local wallpaper_dir = wezterm.config_dir .. "/background/random/"
-    local wallpapers = {}
+-- 保留公开方法，方便其他配置模块复用。
+M.file_exists = file_exists
 
-    -- 使用find命令查找图片文件
-    local handle = io.popen('find "' ..
-    wallpaper_dir .. '" -type f \\( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" \\) 2>/dev/null')
-    if handle then
-        for file in handle:lines() do
-            if M.file_exists(file) then
-                table.insert(wallpapers, file)
-            end
-        end
-        handle:close()
+local function is_supported_image(path)
+    local extension = path:match("%.([^./]+)$")
+    return extension ~= nil and SUPPORTED_EXTENSIONS[extension:lower()] == true
+end
+
+local function scan_with_glob()
+    if not wezterm.glob then
+        return nil
     end
 
-    -- 如果find命令失败，尝试使用ls命令
-    if #wallpapers == 0 then
-        local handle2 = io.popen('ls "' .. wallpaper_dir .. '" 2>/dev/null')
-        if handle2 then
-            for file in handle2:lines() do
-                local full_path = wallpaper_dir .. file
-                if (file:match("%.jpg$") or file:match("%.png$") or file:match("%.jpeg$")) and M.file_exists(full_path) then
-                    table.insert(wallpapers, full_path)
-                end
-            end
-            handle2:close()
+    local wallpapers = {}
+    for _, path in ipairs(wezterm.glob(WALLPAPER_DIR .. "/*")) do
+        if is_supported_image(path) and file_exists(path) then
+            table.insert(wallpapers, path)
         end
     end
 
     return wallpapers
 end
 
--- 获取随机壁纸
+local function scan_with_find()
+    local wallpapers = {}
+    local command = string.format(
+        "find %q -type f 2>/dev/null",
+        WALLPAPER_DIR
+    )
+    local handle = io.popen(command)
+
+    if not handle then
+        return wallpapers
+    end
+
+    for path in handle:lines() do
+        if is_supported_image(path) and file_exists(path) then
+            table.insert(wallpapers, path)
+        end
+    end
+    handle:close()
+
+    return wallpapers
+end
+
+function M.get_wallpaper_files()
+    if wallpaper_cache then
+        return wallpaper_cache
+    end
+
+    wallpaper_cache = scan_with_glob() or scan_with_find()
+    table.sort(wallpaper_cache)
+    return wallpaper_cache
+end
+
+function M.clear_cache()
+    wallpaper_cache = nil
+end
+
 function M.get_random_wallpaper()
     local wallpapers = M.get_wallpaper_files()
-
-    -- 如果没有找到壁纸文件，返回nil
     if #wallpapers == 0 then
         return nil
     end
 
-    -- 使用标准Lua函数生成随机种子
-    math.randomseed(os.time())
-
-    -- 随机选择一张壁纸
     return wallpapers[math.random(#wallpapers)]
 end
 
--- 获取壁纸背景配置
-function M.get_background_config()
-    local wallpaper_path = M.get_random_wallpaper()
-
-    -- 如果没有找到壁纸，使用默认的黑色背景
-    if not wallpaper_path then
-        return {
-            {
-                source = {
-                    Color = "black",
-                },
-                width = "100%",
-                height = "100%",
-                opacity = 0.7,
-            },
-        }
-    end
-
+local function color_layer()
     return {
---         {
---             source = {
---                 File = wallpaper_path,
---             },
---             width = "100%",
---             height = "100%",
---         },
-        {
-            source = {
-                Color = "black",
-            },
-            width = "100%",
-            height = "100%",
-            opacity = 0.7,
-        },
+        source = { Color = "black" },
+        width = "100%",
+        height = "100%",
+        opacity = OVERLAY_OPACITY,
     }
 end
+
+function M.get_background_config()
+    return { color_layer() }
+end
+
+math.randomseed(os.time())
 
 return M
