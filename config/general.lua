@@ -52,5 +52,7 @@ return {
         border_bottom_color  = 'rgba(255,255,255,0.08)',
     },
     -- 使用壁纸模块获取背景配置
-    background = wallpaper.get_background_config(),
+    background = wallpaper.get_background_config({
+        mode = wallpaper.modes.transparent,
+    }),
 }
