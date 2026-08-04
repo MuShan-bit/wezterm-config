@@ -55,6 +55,19 @@ git clone https://github.com/MuShan-bit/wezterm-config.git ~/.config/wezterm
 - Launch Menu & Default Shell: per-OS defaults with common shells; remote SSH entries can be added.
 - Cross-Platform Bindings: platform-specific keymaps; Linux keeps WezTerm defaults.
 
+### Background Styles
+
+Set `background_options.style` at the top of `config/general.lua`:
+
+| Value | Result | Option |
+| --- | --- | --- |
+| `random` | Pick a wallpaper from `background/random` | `random_dir` |
+| `fixed` | Use one wallpaper | `fixed_path` |
+| `solid` | Use a solid colour | `color` |
+| `transparent` | Use a fully transparent window background | None |
+
+For wallpaper styles, use `overlay_opacity` for the black overlay and `brightness` for the wallpaper. Missing images fall back to `color`.
+
 ## Shortcuts
 
 ### macOS (custom)

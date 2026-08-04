@@ -55,6 +55,19 @@ git clone https://github.com/MuShan-bit/wezterm-config.git ~/.config/wezterm
 - 启动菜单与默认 Shell：按操作系统设置默认 Shell，并提供常用 Shell/远程 SSH 启动项。
 - 跨平台绑定：根据平台自动加载快捷键方案；Linux 保留 Wezterm 默认快捷键。
 
+### 背景风格
+
+在 `config/general.lua` 顶部的 `background_options.style` 中选择：
+
+| 值 | 效果 | 配置项 |
+| --- | --- | --- |
+| `random` | 从 `background/random` 随机选取壁纸 | `random_dir` |
+| `fixed` | 使用一张固定壁纸 | `fixed_path` |
+| `solid` | 使用纯色背景 | `color` |
+| `transparent` | 使用完全透明的窗口背景 | 无 |
+
+壁纸模式可通过 `overlay_opacity` 调整黑色遮罩，通过 `brightness` 调整壁纸亮度；图片不存在时会自动回退到 `color`。
+
 ## 快捷键
 
 ### macOS（自定义）
