@@ -19,7 +19,7 @@ bash install.sh
 ```
 
 该脚本将：
-- 在 macOS 通过 Homebrew 安装 WezTerm，并安装 FiraCode Nerd Font。
+- 在 macOS 通过 Homebrew 安装 WezTerm，并额外安装 FiraCode Nerd Font。
 - 在 Linux 优先使用 Flatpak 或 Snap 安装 WezTerm；若不可用，请按官网指引手动安装。
 - 备份现有 `~/.config/wezterm` 到 `~/.config/wezterm.bak-时间戳`，并克隆本配置。
 
@@ -49,15 +49,27 @@ git clone https://github.com/MuShan-bit/wezterm-config.git ~/.config/wezterm
 
 ## 功能概述
 
-- 字体与主题：使用 `FiraCode Nerd Font` 与 `Catppuccin Mocha` 主题，兼具可读性与美观。
-- 窗口与渲染：半透明背景、macOS 毛玻璃、可调窗口装饰与内边距，超大初始视野。
+- 字体与主题：内置 `Maple Mono NF CN` 字体，并使用 `Catppuccin Mocha` 主题；启动菜单使用纯文本标签，避免系统缺少 Nerd Font 图标时显示异常。
+- 窗口与渲染：默认黑色半透明背景、macOS 毛玻璃、细边框和按字符单元计算的内边距；初始终端网格为 `200 x 35`，字体缩放不会改变窗口尺寸。
 - 标签与状态信息：集成 Tabline 插件，显示工作区、CPU/RAM、时间、电池与域信息。
 - 启动菜单与默认 Shell：按操作系统设置默认 Shell，并自动生成 SSH 远程连接启动项。
 - 跨平台绑定：根据平台自动加载快捷键方案；Linux 保留 Wezterm 默认快捷键。
 
+### 配置结构
+
+入口文件 `wezterm.lua` 会合并以下模块，并在最后加载插件：
+
+| 位置 | 内容 |
+| --- | --- |
+| `config/general.lua` | 字体、主题、窗口、标签栏与背景 |
+| `config/launch.lua` | 按平台设置默认 Shell 和本地启动菜单 |
+| `config/bindings/` | macOS、Windows 和通用鼠标绑定 |
+| `config/wallpaper.lua` | 背景模式、随机壁纸扫描与回退逻辑 |
+| `plugins/` | Tabline 与 SSH 启动菜单插件 |
+
 ### 背景风格
 
-`wallpaper.get_background_config()` 可接收以下配置。无参数时保持当前的黑色遮罩效果。
+默认启用透明模式：黑色遮罩叠加在半透明窗口上（背景层 `opacity = 0.7`，窗口 `window_background_opacity = 0.5`）。在 `config/general.lua` 修改 `background` 即可切换模式。
 
 | 模式 | 配置 | 效果 |
 | --- | --- | --- |
@@ -67,19 +79,33 @@ git clone https://github.com/MuShan-bit/wezterm-config.git ~/.config/wezterm
 | `wallpaper.modes.random` | `path` | 从指定目录随机选择图像背景 |
 
 ```lua
+-- config/general.lua
 background = wallpaper.get_background_config({
     mode = wallpaper.modes.fixed,
     path = wezterm.config_dir .. "/background/night.png",
 })
 ```
 
-随机模式的 `path` 是图片目录，默认使用 `background/random`；固定图像不存在、随机目录为空或模式无效时，会自动回退到黑色遮罩。
+随机模式的 `path` 是图片目录，默认使用 `background/random`。扫描支持 `jpg`、`jpeg`、`png` 和 `webp`，也会查找子目录中的图片。固定图像不存在、随机目录为空或模式无效时，会自动回退到黑色遮罩。
+
+```lua
+-- 从默认目录随机选择壁纸
+background = wallpaper.get_background_config({
+    mode = wallpaper.modes.random,
+})
+
+-- 使用纯色
+background = wallpaper.get_background_config({
+    mode = wallpaper.modes.solid,
+    color = "#1e1e2e",
+})
+```
 
 ### SSH 远程连接
 
 SSH 插件默认开启，会读取 `~/.ssh/config`（并解析其中的 `Include` 文件），将有效的 `Host` 别名加入启动菜单。选择 `SSH: <主机名>` 即会新建一个对应的远程连接 Tab；通配符规则（如 `Host *`）不会显示为菜单项。
 
-在 `plugins/init.lua` 将 `enabled_plugins.ssh` 设为 `false` 可关闭该功能。
+在 `plugins/init.lua` 的 `enabled_plugins` 中可分别将 `ssh` 或 `tabline` 设为 `false` 来关闭对应插件。
 
 ## 快捷键
 
@@ -124,7 +150,7 @@ SSH 插件默认开启，会读取 `~/.ssh/config`（并解析其中的 `Include
 
 - 快捷键：使用 Wezterm 默认快捷键，不覆盖。
 - 默认 Shell：`bash`。
-- 启动菜单：`Bash` 与统一的远程 SSH 项。
+- 启动菜单：`Bash` 与从 `~/.ssh/config` 自动发现的远程 SSH 项。
 
 ### Leader 键
 
@@ -140,12 +166,13 @@ SSH 插件默认开启，会读取 `~/.ssh/config`（并解析其中的 `Include
 
 > 远程 SSH：启动菜单会自动显示 `~/.ssh/config` 中的 Host 别名。
 
-## 依赖与插件
+## 字体、依赖与插件
 
 | 名称 | 类型 | 作用 | 源链接 |
 | --- | --- | --- | --- |
 | WezTerm Tabline | WezTerm 插件 | 在标签栏显示工作区、CPU/RAM、时间、电池、域等信息 | https://github.com/michaelbrusegard/tabline.wez |
-| FiraCode Nerd Font | 字体 | 提供编程连字与 Nerd Font 图标支持 | https://www.nerdfonts.com/ |
+| Maple Mono NF CN | 内置字体 | 当前终端字体，包含中文与 Nerd Font 图标字形 | `fonts/Maple Mono NF CN/` |
+| FiraCode Nerd Font | 可选系统字体 | 一键安装脚本会尝试安装；当前配置不将其作为主字体 | https://www.nerdfonts.com/ |
 | Catppuccin for WezTerm | 颜色主题 | 提供 Catppuccin Mocha 等配色方案 | https://github.com/catppuccin/wezterm |
 
 ## 效果图
